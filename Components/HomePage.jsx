@@ -37,9 +37,9 @@ const Item = styled(Paper)(({ theme }) => ({
 // export const rentalContractAddress = "0xca63b89db5a634ad465927ff63e0fd1495928e23";
 
 // Goriel Testnet
-export const landContractAddress = "0x48b72b72fa3ad813362ee178c58ab59c33d8572a";
+export const landContractAddress = "0x0c4a4ad18f230b5f327b412c365aab12ac7f0dbd";
 export const lordContractAddress = "0x3373d30f1338467bf1f68b480de77d07c34c82f3";
-export const rentalContractAddress = "0xbaf55e929f4b2243b4374075123d00ff83a0a036";
+export const rentalContractAddress = "0x91Cc95C30cdA0De955279966D8fe904893e0E8C7";
 
 const HomePage = () => {
     const [domLoaded, setDomLoaded] = useState(false);
@@ -295,7 +295,7 @@ const HomePage = () => {
             console.log("Waiting ...")
        }, 2000);
 
-        console.log([[land,lord,landcategory,lordcategory],landCordinate,landMerkleProof1,landMerkleProof2,landMerkleProof3,lordMerkleProof])
+        // console.log([[land,lord,landcategory,lordcategory],landCordinate,landMerkleProof1,landMerkleProof2,landMerkleProof3,lordMerkleProof])
         let owner = await rentalContract.stake([land,lord,landcategory,lordcategory],landCordinate,landMerkleProof1,landMerkleProof2,landMerkleProof3,lordMerkleProof).catch((err)=>{
         alert(err.message)
         handleClose()
@@ -353,28 +353,27 @@ const HomePage = () => {
 
     const LandLordComp = (props) => {
     return(
-        <Grid item sm={10} key = {(props.item.lordId).toString()} style={{marginBottom:"2%"}}>
+        <Grid item sm={10} key = {(props.item.landId).toString()}>
         <Item style={{backgroundColor:"#041E2F", color:"#ffffff"}}>
-        <h2>LandLord #{props.item.rewardId}</h2>
             <Stack direction="row" justifyContent="space-around" alignItems="center" spacing={0.5}>
             <div style={{backgroundColor:"transparent", color:"white"}}>
                 <b>Lord ID</b><br/>
-                {Number(props.item.lordId)}
+                {Number(props.item.landId)}
             </div>
             <div style={{backgroundColor:"transparent", color:"white"}}>
                 <b>Land ID</b><br/>
-                {(props.item.landId).join()}
+                {(props.item.lordIds).join()}
             </div>
             {/* <div style={{backgroundColor:"transparent", color:"white"}}>
                 <b>Total Reward</b><br/>
                 {(props.item.totalRwd)}
             </div> */}
             <div style={{backgroundColor:"transparent", color:"white"}}>
-                <Button style={{margin:"1%"}} color="error" fullWidth variant="contained" onClick={()=>{handleUnstake(props.item.rewardId)}}>UnStake</Button>
-                {(props.item.claimed === true)?
+                <Button style={{margin:"1%"}} color="error" fullWidth variant="contained" onClick={()=>{handleUnstake(props.item.landId)}}>UnStake</Button>
+                {/* {(props.item.claimed === true)?
                 <Button style={{margin:"1%"}} color="secondary" fullWidth variant="contained">Already Clamied</Button> :
                 <Button style={{margin:"1%"}} color="success" fullWidth variant="contained" onClick={()=>{handleClaimRewards(props.item.rewardId)}}>Claim {(props.item.claimRwd / 1000000000000000000)} ETH</Button>
-                }
+                } */}
                 
             </div>
             </Stack>
@@ -410,6 +409,14 @@ const HomePage = () => {
         if (poolPercentInfo > 0) {
             setPoolPercent(poolPercentInfo/100)
         }
+
+        const lalo = await rentalContract.landlords(address).catch((err)=>{
+            return console.log(err)
+            })
+        if (lalo) {
+            setLandLord(lalo)
+        }
+        
         
         // setRewardId((rewardIdInfo)?.map(Number))
         // const lalo = [...landLord]
@@ -473,9 +480,32 @@ const HomePage = () => {
                         </Item> 
                     </Grid>: <></>}
 
+                    <Grid item sm={10}>
+                        <Item style={{backgroundColor:"#041E2F", color:"#ffffff"}}>
+                        <h1 style={{marginBottom:"2%"}}>Staked LandLord Dashboard</h1>
+                            <Stack direction="row" justifyContent="space-around" alignItems="center" spacing={0.5}>
+                            <div style={{backgroundColor:"transparent", color:"white"}}>
+                                <b>Total Reward Share</b><br/>
+                                {Number(poolPercent/100)} %
+                            </div>
+                            <div style={{backgroundColor:"transparent", color:"white"}}>
+                                <b>Total Claimable Reward</b><br/>
+                                {Number(reward / 1000000000000000000).toPrecision(8)}
+                            </div>
+                            <div style={{backgroundColor:"transparent", color:"white"}}>
+                                <Button style={{margin:"1%"}} color="success" fullWidth variant="contained" onClick={()=>{handleClaimRewards()}}>Claim Total Reward</Button>   
+                            </div>
+                            </Stack>
+                        </Item>
+                    </Grid>       
+                    
+                    {landLord.map((item, index) => {
+                        return <LandLordComp item={item} key={index}/>
+                    })}
+
                     <Grid item sm={5}>
                         <Item style={{backgroundColor:"#041E2F"}}>
-                        <Image src={Lord} alt="Picture of the author" width={100}/>
+                        <Image src={Lord} alt="Lord" width={100}/>
                         <h1 style={{color:"#fff"}}>Lords You Own</h1>
                         {ownlord.map((item, index)=>{
                             if (lord === (item.tokenId)) {
@@ -492,14 +522,14 @@ const HomePage = () => {
 
                     <Grid item sm={5}>
                         <Item style={{backgroundColor:"#041E2F"}}>
-                        <Image src={Land} alt="Picture of the author" width={100}/>
+                        <Image src={Land} alt="Land" width={100}/>
                         <h1 style={{color:"#fff"}}>Lands You Own</h1>
                             {ownland.map((item, index)=>{
                             if (land.includes((item.tokenId))) {
                                 return <h2 style={{margin:'2%', padding:'1%', color:'lightGreen', cursor: 'pointer', textAlign:"left"}} key={index} onClick={()=>{handleLandChange((item.tokenId), (item.rawMetadata.attributes[0].value).toUpperCase())}}>Land #{item.tokenId} &nbsp;
                                 <Chip size="small" color="success" label={(item.rawMetadata.attributes[0]?.value)?.toUpperCase()}/></h2>
                             } else {
-                                return <h3 style={{margin:'2%', padding:'1%', color:'#fff', cursor: 'pointer', textAlign:"left"}} key={index} onClick={()=>{handleLandChange((item.tokenId), (item.rawMetadata.attributes[0].value).toUpperCase())}}>Land #{item.tokenId} &nbsp;
+                                return <h3 style={{margin:'2%', padding:'1%', color:'#fff', cursor: 'pointer', textAlign:"left"}} key={index} onClick={()=>{handleLandChange((item.tokenId), (item.rawMetadata.attributes[0]?.value)?.toUpperCase())}}>Land #{item.tokenId} &nbsp;
                                 <Chip size="small" style={{color:"#fff"}} 
                                 // label={(item.rawMetadata?.attributes[0]?.value)?.toUpperCase() || "BASIC"} variant="outlined" 
                                 />
@@ -520,20 +550,20 @@ const HomePage = () => {
                             }}>Stake</Button> : <Button color="success" fullWidth variant="contained" onClick={()=>{handleStake();}}>Stake</Button>}
                         </div>
                     </Grid><br/>    
-                    <Grid item sm={10} style={{marginBottom:"2%"}}>
+                    {/* <Grid item sm={10}>
                         <Item style={{backgroundColor:"#041E2F", color:"#ffffff"}}>
                         <h1 style={{marginBottom:"2%"}}>Staked LandLord Dashboard</h1>
                             <Stack direction="row" justifyContent="space-around" alignItems="center" spacing={0.5}>
                             <div style={{backgroundColor:"transparent", color:"white"}}>
                                 <b>Total Reward Share</b><br/>
-                                {Number(poolPercent)} %
+                                {Number(poolPercent/100)} %
                             </div>
                             <div style={{backgroundColor:"transparent", color:"white"}}>
                                 <b>Total Claimable Reward</b><br/>
-                                {Number(reward / 1000000000000000000)}
+                                {Number(reward / 1000000000000000000).toPrecision(8)}
                             </div>
                             <div style={{backgroundColor:"transparent", color:"white"}}>
-                                <Button style={{margin:"1%"}} color="error" fullWidth variant="contained" onClick={()=>{handleUnstake(8)}}>UnStake</Button>
+                                <Button style={{margin:"1%"}} color="error" fullWidth variant="contained" onClick={()=>{handleUnstake(4)}}>UnStake</Button>
                                 <Button style={{margin:"1%"}} color="success" fullWidth variant="contained" onClick={()=>{handleClaimRewards()}}>Claim Total Reward</Button>   
                             </div>
                             </Stack>
@@ -542,7 +572,7 @@ const HomePage = () => {
                     
                     {landLord.map((item, index) => {
                         return <LandLordComp item={item} key={index}/>
-                    })}
+                    })} */}
                     </Grid>
                 </Box>
             </Container>
