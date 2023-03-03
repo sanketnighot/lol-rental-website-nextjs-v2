@@ -2064,62 +2064,6 @@ export const lord_abi = [
 
 export const rental_abi = [
 	{
-		"inputs": [],
-		"name": "getReward",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "reward",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_rewardsDuration",
-				"type": "uint256"
-			}
-		],
-		"name": "notifyRewardAmount",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_lordNFT",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_landNFT",
-				"type": "address"
-			},
-			{
-				"internalType": "contract IERC20",
-				"name": "_rewardsToken",
-				"type": "address"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_rootLand",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_rootLord",
-				"type": "bytes32"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -2131,32 +2075,6 @@ export const rental_abi = [
 		],
 		"name": "Initialized",
 		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -2197,122 +2115,6 @@ export const rental_abi = [
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "_landWeight",
-				"type": "uint256[]"
-			}
-		],
-		"name": "setLandWeight",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "_rootLand",
-				"type": "bytes32"
-			}
-		],
-		"name": "setRootLand",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "_rootLord",
-				"type": "bytes32"
-			}
-		],
-		"name": "setRootLord",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"components": [
-					{
-						"internalType": "uint256[]",
-						"name": "_landId",
-						"type": "uint256[]"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_lordId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256[]",
-						"name": "_landCatorgy",
-						"type": "uint256[]"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_lordCatory",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct StakingRewards.Deposite",
-				"name": "deposite",
-				"type": "tuple"
-			},
-			{
-				"components": [
-					{
-						"internalType": "uint256[]",
-						"name": "land1",
-						"type": "uint256[]"
-					},
-					{
-						"internalType": "uint256[]",
-						"name": "land2",
-						"type": "uint256[]"
-					},
-					{
-						"internalType": "uint256[]",
-						"name": "land3",
-						"type": "uint256[]"
-					}
-				],
-				"internalType": "struct StakingRewards.corrdinate",
-				"name": "cordinate",
-				"type": "tuple"
-			},
-			{
-				"internalType": "bytes32[]",
-				"name": "_merkleProofland1",
-				"type": "bytes32[]"
-			},
-			{
-				"internalType": "bytes32[]",
-				"name": "_merkleProofland2",
-				"type": "bytes32[]"
-			},
-			{
-				"internalType": "bytes32[]",
-				"name": "_merkleProofland3",
-				"type": "bytes32[]"
-			},
-			{
-				"internalType": "bytes32[]",
-				"name": "_merkleProoflord",
-				"type": "bytes32[]"
-			}
-		],
-		"name": "stake",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -2332,30 +2134,23 @@ export const rental_abi = [
 		"type": "event"
 	},
 	{
+		"anonymous": false,
 		"inputs": [
 			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "oldOwner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
 				"internalType": "address",
 				"name": "newOwner",
 				"type": "address"
 			}
 		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_lordID",
-				"type": "uint256"
-			}
-		],
-		"name": "withdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
+		"name": "UpdateOwner",
+		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -2397,12 +2192,75 @@ export const rental_abi = [
 	},
 	{
 		"inputs": [],
+		"name": "getReward",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getRewardForDuration",
 		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_landContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_lordContract",
+				"type": "address"
+			},
+			{
+				"internalType": "contract IERC20",
+				"name": "_rewardsToken",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_rootLand",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "_rootLord",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_landWeight",
+				"type": "uint256[]"
+			}
+		],
+		"name": "initialize",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "landNFT",
+		"outputs": [
+			{
+				"internalType": "contract IRLand",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -2431,22 +2289,9 @@ export const rental_abi = [
 						"type": "uint256[]"
 					}
 				],
-				"internalType": "struct StakingRewards.landlord[]",
+				"internalType": "struct RentalRevised.landlord[]",
 				"name": "",
 				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "landNFT",
-		"outputs": [
-			{
-				"internalType": "contract IRLand",
-				"name": "",
-				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -2476,6 +2321,24 @@ export const rental_abi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "reward",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_rewardsDuration",
+				"type": "uint256"
+			}
+		],
+		"name": "notifyRewardAmount",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -2591,6 +2454,135 @@ export const rental_abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "_landWeight",
+				"type": "uint256[]"
+			}
+		],
+		"name": "setLandWeight",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			}
+		],
+		"name": "setOwner",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_rootLand",
+				"type": "bytes32"
+			}
+		],
+		"name": "setRootLand",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_rootLord",
+				"type": "bytes32"
+			}
+		],
+		"name": "setRootLord",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256[]",
+						"name": "_landId",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_lordId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "_landCatorgy",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_lordCatory",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct RentalRevised.Deposite",
+				"name": "deposite",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256[]",
+						"name": "land1",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "land2",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "land3",
+						"type": "uint256[]"
+					}
+				],
+				"internalType": "struct RentalRevised.corrdinate",
+				"name": "cordinate",
+				"type": "tuple"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "_merkleProofland1",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "_merkleProofland2",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "_merkleProofland3",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "_merkleProoflord",
+				"type": "bytes32[]"
+			}
+		],
+		"name": "stake",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "totalSupply",
 		"outputs": [
@@ -2620,6 +2612,19 @@ export const rental_abi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_lordID",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]

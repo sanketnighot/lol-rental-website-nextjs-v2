@@ -37,9 +37,9 @@ const Item = styled(Paper)(({ theme }) => ({
 // export const rentalContractAddress = "0xca63b89db5a634ad465927ff63e0fd1495928e23";
 
 // Goriel Testnet
-export const landContractAddress = "0x0c4a4ad18f230b5f327b412c365aab12ac7f0dbd";
+export const landContractAddress = "0x25d07c1c46fc751ad55d196ca47e5b2faf4bc377";
 export const lordContractAddress = "0x3373d30f1338467bf1f68b480de77d07c34c82f3";
-export const rentalContractAddress = "0x91Cc95C30cdA0De955279966D8fe904893e0E8C7";
+export const rentalContractAddress = "0x706c02030490dbE069007E401f42bdD39D9766A4";
 
 const HomePage = () => {
     const [domLoaded, setDomLoaded] = useState(false);
@@ -531,7 +531,7 @@ const HomePage = () => {
                             } else {
                                 return <h3 style={{margin:'2%', padding:'1%', color:'#fff', cursor: 'pointer', textAlign:"left"}} key={index} onClick={()=>{handleLandChange((item.tokenId), (item.rawMetadata.attributes[0]?.value)?.toUpperCase())}}>Land #{item.tokenId} &nbsp;
                                 <Chip size="small" style={{color:"#fff"}} 
-                                // label={(item.rawMetadata?.attributes[0]?.value)?.toUpperCase() || "BASIC"} variant="outlined" 
+                                label={(item.rawMetadata?.attributes[0]?.value)?.toUpperCase() || "BASIC"} variant="outlined" 
                                 />
                                 </h3>
                             }
