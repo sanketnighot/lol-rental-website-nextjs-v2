@@ -32,14 +32,14 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 // // Mainnet
-// export const landContractAddress = "0x339f39f2c458fb9b0053e3116e00b1f2b607ba31";
-// export const lordContractAddress = "0x163ccc9719139c2e0b7543738e7f0de67bba75d5";
-// export const rentalContractAddress = "0xca63b89db5a634ad465927ff63e0fd1495928e23";
+export const landContractAddress = "0x339f39f2c458fb9b0053e3116e00b1f2b607ba31";
+export const lordContractAddress = "0x163ccc9719139c2e0b7543738e7f0de67bba75d5";
+export const rentalContractAddress = "0xca63b89db5a634ad465927ff63e0fd1495928e23";
 
 // Goriel Testnet
-export const landContractAddress = "0x25d07c1c46fc751ad55d196ca47e5b2faf4bc377";
-export const lordContractAddress = "0x3373d30f1338467bf1f68b480de77d07c34c82f3";
-export const rentalContractAddress = "0x706c02030490dbE069007E401f42bdD39D9766A4";
+// export const landContractAddress = "0x63b03cb196d8c2ab01144807898c580026339a57";
+// export const lordContractAddress = "0xa89c71f7ad0f5a0f8a3646f56cdc9d81f8b79c4d";
+// export const rentalContractAddress = "0x7b9b1429da754e875958dcf6812fae3897f5baac";
 
 const HomePage = () => {
     const [domLoaded, setDomLoaded] = useState(false);
@@ -385,7 +385,7 @@ const HomePage = () => {
     useEffect(() => {
         if (!isConnected) return;
         if (chains.find((x) => x.id === chain?.id) > 0) return;
-        switchNetwork && switchNetwork(5);
+        switchNetwork && switchNetwork(1);
     }, [chain?.id, chains, isConnected, switchNetwork]);
 
     useEffect(()=> {
@@ -402,7 +402,12 @@ const HomePage = () => {
         const rewardInfo = await rentalContract.earned(address).catch((err)=>{
             return console.log(err)
             })
-        setReward(rewardInfo)
+        if (rewardInfo > 0) {
+            setReward(Number(rewardInfo))
+        } else {
+            setReward(0)
+        }
+        
         const poolPercentInfo = await rentalContract.userPoolPercentage(address).catch((err)=>{
             return console.log(err)
             })
@@ -447,7 +452,7 @@ const HomePage = () => {
         setOwnLand(ownedNft[0]);
         setOwnLord(ownedNft[1]);
         }
-    }, 7000);
+    }, 4000);
     return () => clearInterval(interval);}
     );
   
@@ -465,7 +470,7 @@ const HomePage = () => {
                     <Grid item sm={10} style={{marginTop: '1%'}}>
                         <Item style={{backgroundColor:"#041E2F", color:"#ffffff"}}>
                         <Image src={Logo} alt="Picture of the author" width={300} />
-                            <h1 style={{color:"#ffffff"}}>RENTAL DASHBOARD</h1>
+                            <h1 style={{color:"#ffffff"}}>RENTAL DASHBOARD : VERSION 2</h1>
                             {isConnected ? disconnectWalletButton() : connectWalletButton()} <br/>
                         </Item>
                     </Grid>
@@ -484,16 +489,17 @@ const HomePage = () => {
                         <Item style={{backgroundColor:"#041E2F", color:"#ffffff"}}>
                         <h1 style={{marginBottom:"2%"}}>Staked LandLord Dashboard</h1>
                             <Stack direction="row" justifyContent="space-around" alignItems="center" spacing={0.5}>
-                            <div style={{backgroundColor:"transparent", color:"white"}}>
+                            {/* <div style={{backgroundColor:"transparent", color:"white"}}>
                                 <b>Total Reward Share</b><br/>
                                 {Number(poolPercent/100)} %
-                            </div>
+                            </div> */}
                             <div style={{backgroundColor:"transparent", color:"white"}}>
                                 <b>Total Claimable Reward</b><br/>
                                 {Number(reward / 1000000000000000000).toPrecision(8)}
                             </div>
                             <div style={{backgroundColor:"transparent", color:"white"}}>
-                                <Button style={{margin:"1%"}} color="success" fullWidth variant="contained" onClick={()=>{handleClaimRewards()}}>Claim Total Reward</Button>   
+                                {(reward > 0) ? <Button style={{margin:"1%"}} color="success" fullWidth variant="contained" onClick={()=>{handleClaimRewards()}}>Claim Total Reward</Button>
+                                 : <Button style={{margin:"1%"}} color="success" fullWidth variant="contained" onClick={()=>{alert("No Rewards colleted to be claimed")}}>Claim Total Reward</Button> }
                             </div>
                             </Stack>
                         </Item>
