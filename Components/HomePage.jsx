@@ -32,14 +32,14 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 // Mainnet
-// export const landContractAddress = "0x339f39f2c458fb9b0053e3116e00b1f2b607ba31";
-// export const lordContractAddress = "0x163ccc9719139c2e0b7543738e7f0de67bba75d5";
-// export const rentalContractAddress = "0xca63b89db5a634ad465927ff63e0fd1495928e23";
+export const landContractAddress = "0x339f39f2c458fb9b0053e3116e00b1f2b607ba31";
+export const lordContractAddress = "0x163ccc9719139c2e0b7543738e7f0de67bba75d5";
+export const rentalContractAddress = "0xca63b89db5a634ad465927ff63e0fd1495928e23";
 
 // Goriel Testnet
-export const landContractAddress = "0x63b03cb196d8c2ab01144807898c580026339a57";
-export const lordContractAddress = "0xa89c71f7ad0f5a0f8a3646f56cdc9d81f8b79c4d";
-export const rentalContractAddress = "0xe57703ee062ccfedb5ab7483a5689bf3a6a1b1d8";
+// export const landContractAddress = "0x63b03cb196d8c2ab01144807898c580026339a57";
+// export const lordContractAddress = "0xa89c71f7ad0f5a0f8a3646f56cdc9d81f8b79c4d";
+// export const rentalContractAddress = "0xe57703ee062ccfedb5ab7483a5689bf3a6a1b1d8";
 
 const HomePage = () => {
     const [domLoaded, setDomLoaded] = useState(false);
@@ -385,7 +385,7 @@ const HomePage = () => {
     useEffect(() => {
         if (!isConnected) return;
         if (chains.find((x) => x.id === chain?.id) > 0) return;
-        switchNetwork && switchNetwork(5);
+        switchNetwork && switchNetwork(1);
     }, [chain?.id, chains, isConnected, switchNetwork]);
 
     useEffect(()=> {
