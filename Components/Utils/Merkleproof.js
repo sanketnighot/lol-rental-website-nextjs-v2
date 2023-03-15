@@ -8,7 +8,7 @@ export const landMerkle = (x, y, category) => {
     let leaves = Lands.map(addr => keccak256(addr))
     let merkleTree = new MerkleTree(leaves, keccak256, {sortPairs: true})
     const rootHash = merkleTree.getHexRoot()
-    console.log("Land: ", rootHash);
+    // console.log("Land: ", rootHash);
     let prove = `${x},${y},${category}` // The input
     
     let hashedAddress = keccak256(prove)
@@ -21,7 +21,7 @@ export const lordMerkle = (id, category) => {
     let leaves = Lords.map(addr => keccak256(addr))
     let merkleTree = new MerkleTree(leaves, keccak256, {sortPairs: true})
     const rootHash = merkleTree.getHexRoot()
-    console.log("Lord: ", rootHash);
+    // console.log("Lord: ", rootHash);
     let prove = `${id},${category}` // The input
     let hashedAddress = keccak256(prove)
     let proof = merkleTree.getHexProof(hashedAddress)

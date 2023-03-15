@@ -31,15 +31,15 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
   }));
 
-// // Mainnet
-export const landContractAddress = "0x339f39f2c458fb9b0053e3116e00b1f2b607ba31";
-export const lordContractAddress = "0x163ccc9719139c2e0b7543738e7f0de67bba75d5";
-export const rentalContractAddress = "0xca63b89db5a634ad465927ff63e0fd1495928e23";
+// Mainnet
+// export const landContractAddress = "0x339f39f2c458fb9b0053e3116e00b1f2b607ba31";
+// export const lordContractAddress = "0x163ccc9719139c2e0b7543738e7f0de67bba75d5";
+// export const rentalContractAddress = "0xca63b89db5a634ad465927ff63e0fd1495928e23";
 
 // Goriel Testnet
-// export const landContractAddress = "0x63b03cb196d8c2ab01144807898c580026339a57";
-// export const lordContractAddress = "0xa89c71f7ad0f5a0f8a3646f56cdc9d81f8b79c4d";
-// export const rentalContractAddress = "0x7b9b1429da754e875958dcf6812fae3897f5baac";
+export const landContractAddress = "0x63b03cb196d8c2ab01144807898c580026339a57";
+export const lordContractAddress = "0xa89c71f7ad0f5a0f8a3646f56cdc9d81f8b79c4d";
+export const rentalContractAddress = "0xe57703ee062ccfedb5ab7483a5689bf3a6a1b1d8";
 
 const HomePage = () => {
     const [domLoaded, setDomLoaded] = useState(false);
@@ -286,7 +286,7 @@ const HomePage = () => {
                 if((item.tokenId) === land[2]) {
                     const getProof = await landMerkle((nX), (nY), landcategory[2])
                     landMerkleProof3 = getProof
-                    console.log(landMerkleProof3)
+                    // console.log(landMerkleProof3)
                     landCordinate[2] = [nX.toString(),nY.toString()]
                 }
             })
@@ -385,13 +385,11 @@ const HomePage = () => {
     useEffect(() => {
         if (!isConnected) return;
         if (chains.find((x) => x.id === chain?.id) > 0) return;
-        switchNetwork && switchNetwork(1);
+        switchNetwork && switchNetwork(5);
     }, [chain?.id, chains, isConnected, switchNetwork]);
 
     useEffect(()=> {
     const interval = setInterval( async () => {
-        // lordMerkle()
-        // landMerkle()
         if (address) {
         const landApproval = await lordContract.isApprovedForAll(address, rentalContractAddress).catch((err)=>{
             return console.log(err)})
@@ -407,13 +405,6 @@ const HomePage = () => {
         } else {
             setReward(0)
         }
-        
-        const poolPercentInfo = await rentalContract.userPoolPercentage(address).catch((err)=>{
-            return console.log(err)
-            })
-        if (poolPercentInfo > 0) {
-            setPoolPercent(poolPercentInfo/100)
-        }
 
         const lalo = await rentalContract.landlords(address).catch((err)=>{
             return console.log(err)
@@ -422,32 +413,6 @@ const HomePage = () => {
             setLandLord(lalo)
         }
         
-        
-        // setRewardId((rewardIdInfo)?.map(Number))
-        // const lalo = [...landLord]
-        // rewardId?.map(async(ll)=>{
-        // var lld = await rentalContract.getLandLordsInfo(ll).catch((err)=>{
-        //         return console.log(err)
-        //     })
-        // var claimRwd = await axios.get(`https://rental-api.lordsofthelands.io/api/getRewards?rewardId=${ll}`)
-        // var claimTotalRwd = await axios.get(`https://rental-api.lordsofthelands.io/api/getTotalRewards?rewardId=${ll}`)
-        
-        // if(landLord.some(ll => ll.lordId !== lld.lordId)){
-        //     return
-        // } else{
-        //     let asd = Object.assign({selected: false}, lld);
-        //     // console.log(claimRwd)
-        //     asd.rewardId = ll
-        //     asd.claimRwd = (claimRwd.data.rewardAmount)
-        //     asd.totalRwd = (claimTotalRwd.data.rewardAmount)
-        //     asd.claimed = (claimRwd.data.claimed)
-        //     // asd.claimRwd = 0
-        //     // console.log(asd)
-        //     lalo.push(asd)
-            
-        //     }
-        // })
-        // setLandLord(lalo)
         const ownedNft = await getNFTs(address);
         setOwnLand(ownedNft[0]);
         setOwnLord(ownedNft[1]);
@@ -464,7 +429,7 @@ const HomePage = () => {
         <>
         {domLoaded && (
             <Container>
-                <Box sx={{ flexGrow: 1 }} style={{height: '100vh', overflow: 'scroll'}}>
+                <Box sx={{ flexGrow: 1 }} style={{height: '100vh'}}>
                     <Grid container spacing={2} direction="row" justifyContent="center" alignItems="flex-start">
 
                     <Grid item sm={10} style={{marginTop: '1%'}}>
@@ -495,7 +460,7 @@ const HomePage = () => {
                             </div> */}
                             <div style={{backgroundColor:"transparent", color:"white"}}>
                                 <b>Total Claimable Reward</b><br/>
-                                {Number(reward / 1000000000000000000).toPrecision(8)}
+                                {(reward > 1000000000000) ?  <p>{(Number(reward / 1000000000000000000)).toString()} ETH</p> :  <p>{(Number(reward)).toString()} WEI</p>}
                             </div>
                             <div style={{backgroundColor:"transparent", color:"white"}}>
                                 {(reward > 0) ? <Button style={{margin:"1%"}} color="success" fullWidth variant="contained" onClick={()=>{handleClaimRewards()}}>Claim Total Reward</Button>
