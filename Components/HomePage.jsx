@@ -34,7 +34,7 @@ const Item = styled(Paper)(({ theme }) => ({
 // Mainnet
 export const landContractAddress = "0x339f39f2c458fb9b0053e3116e00b1f2b607ba31";
 export const lordContractAddress = "0x163ccc9719139c2e0b7543738e7f0de67bba75d5";
-export const rentalContractAddress = "0xca63b89db5a634ad465927ff63e0fd1495928e23";
+export const rentalContractAddress = "0xdbc1d689cd4b170c24f8ca4e35c68b510846c39c";
 
 // Goriel Testnet
 // export const landContractAddress = "0x63b03cb196d8c2ab01144807898c580026339a57";
@@ -347,6 +347,7 @@ const HomePage = () => {
             return console.log(err)
         })
         await owner?.wait(1).then(async ()=>{
+            alert("Reward Claim Successful !")
             handleClose()
         })
     };
